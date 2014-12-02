@@ -9,6 +9,7 @@ Version: 1.0.0
 */
 
 include "custom_post_type.php";
+include "faq_archives.php";
 include "acf_custom_fields.php";
 if( !function_exists('acf') ){	//if ACF is not installed already
 	include "acf/acf.php";

@@ -29,6 +29,7 @@ function mdc_register_faq_post_types(){
 		'has_archive'        => true,
 		'hierarchical'       => false,
 		'menu_position'      => null,
+		'menu_icon'      	 => plugin_dir_url(__FILE__).'/assets/icon.png',
 		'supports'           => array( 'title', 'editor') //,'thumbnail')
 	);
 	register_post_type( 'mdc_faq', $args );
