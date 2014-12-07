@@ -8,9 +8,11 @@ Author URI: http://mukto.medhabi.com
 Version: 1.0.0
 */
 
-include "custom_post_type.php";
+include "faq_custom_post_type.php";
 include "faq_archives.php";
-include "acf_custom_fields.php";
+// include "faq_acf_custom_fields.php";
+include "faq_option_page.php";
+include "faq_enque_scripts.php";
 if( !function_exists('acf') ){	//if ACF is not installed already
 	include "acf/acf.php";
 	// define('ACF_LITE', true);

@@ -1,0 +1,12 @@
+.faq-attach > h3 {
+	margin: 0;
+}
+.attach-img img {
+	border-radius: 0;
+	height: 100px;
+	margin: 5px;
+	width: 100px;
+}
+.ui-accordion-header {
+	background: none repeat scroll 0 0 #aaf;
+}
