@@ -34,7 +34,8 @@ function mdc_faq_shortcode_generator(){
 ?>
 <div class="wrap">
 	<h2>Shortcode Generator</h2>
-	<form method="POST" action="">
+	<form method="POST" action="" class="gen-shortcode">
+		<input type="hidden" name="gene-code" value="1" />
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -80,34 +81,37 @@ function mdc_faq_shortcode_generator(){
 			</tbody>
 		</table>
 		<p class="submit">
-			<input id="submit" class="button button-primary" type="submit" value="Generate"/>
+			<input id="submit" class="button button-primary gen-button" onclick="return false" type="submit" value="Generate"/>
 		</p>
 	</form>
-	<?php
-	if ($_POST) {
-		$output	 = "[mdc_faq";
-		if($_POST['number'] != ''){
-			$output	.= " number='".$_POST['number']."'";
+	<div id="how-to-shortcode" style="display: none">
+		<h3>How to create an FAQ page</h3>
+		<form action="" method="POST">
+			<input type="hidden" name="gene-page" value="1" />
+			<ol>
+				<li>Copy the shortcode below.<br /><span id="generate" ></span></li>
+				<li>Go to <a href="<?php echo admin_url();?>post-new.php?post_type=page" target="_blank">Pages > Add New</a>. Give a title and paste the shortcode in the content editor area.</li>
+				<li>Publish the page.</li>
+				<li>Or, give a page title and click the button below to do it for you-</li>
+			</ol>
+			<input type="text" name="faq_title" placeholder="Page Title">
+			<input id="submit" type="submit" class="button button-primary gen-page-btn" value="Generate FAQ Page" />
+		</form>
+	</div>
+		<?php if($_POST['gene-page']){
+		// Create post object
+		$my_post = array(
+		'post_title'	=>	$_POST['faq_title'],
+		'post_content'	=>	$_POST['shortcode'],
+		'post_status'	=>	'publish',
+		'post_type'		=>	'page'
+		);
+
+		// Insert the post into the database
+		$faq_pid = wp_insert_post( $my_post );
+		echo "<span class=\"gen-success\">FAQ page has been created. <a href=\"".get_the_permalink($faq_pid)."\" target=\"_blank\">Click here</a> to view the page.</span>";
 		}
-		if($_POST['category'][0] != ''){
-			$output	.= " category='";
-			foreach($_POST['category'] as $cat){
-				$output	.= $cat.", ";
-			}
-			$output .= "'";
-		}
-		if($_POST['keyword'][0] != ''){
-			$output	.= " keyword='";
-			foreach($_POST['keyword'] as $key){
-				$output	.= $key.", ";
-			}
-			$output .= "'";
-		}
-		$output .= "]";
-		$output = str_replace(", '", "'", $output);
-		echo "<input onClick=\"this.setSelectionRange(0, this.value.length)\" type=\"text\" value=\"".$output."\" style=\"width:400px;\" readonly />";
-	}
-	?>
+		?>
 </div>
 <?php
 } 

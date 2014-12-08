@@ -27,9 +27,34 @@ function admin_enqueue_script(){
 	<script src="<?php echo plugin_dir_url(__FILE__);?>assets/jquery.js"></script>
 	<script src="<?php echo plugin_dir_url(__FILE__);?>assets/chosen.jquery.js"></script>
 	<script>
-		jQuery(document).ready(function(){
-			jQuery(".chosen").chosen();
+		$ = new jQuery.noConflict();
+		$(document).ready(function(){
+			$(".chosen").chosen();
+			//generate shortcode with ajax
+			$(".gen-button").click(function(event) {
+				$("#how-to-shortcode").show();
+				$(".gen-success").hide();
+				$.ajax({
+					url: "<?php echo plugin_dir_url(__FILE__);?>assets/ajax.php",
+					type: "post",
+					data: $(".gen-shortcode").serialize(),
+					success: function(d) {
+						document.getElementById("generate").innerHTML  = d;
+					}
+				});
+			});
+			$(".gen-page").click(function(event) {
+				$.ajax({
+					url: "<?php echo plugin_dir_url(__FILE__);?>assets/ajax.php",
+					type: "post",
+					data: $(".gen-page").serialize(),
+					success: function(d) {
+						document.getElementById("generate").innerHTML  = d;
+					}
+				});
+			});
 		});
+		
 	</script>
 <?php
 }
